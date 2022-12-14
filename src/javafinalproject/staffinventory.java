@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,7 +25,6 @@ public class staffinventory extends javax.swing.JFrame {
     PreparedStatement ps;
     ResultSet rs;
     Statement st;
-    
 
     public staffinventory() {
         initComponents();
@@ -482,7 +483,7 @@ public class staffinventory extends javax.swing.JFrame {
 
     private void removeitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeitemActionPerformed
         // TODO add your handling code here:
-        
+
         int row = table.getSelectedRow();
         String i = itemf.getText();
         if (i.equals("")) {
@@ -547,15 +548,15 @@ public class staffinventory extends javax.swing.JFrame {
 
     private void additemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_additemActionPerformed
         // TODO add your handling code here:
-        String users=username.getText();
+        String users = username.getText();
         String id = userid.getText();
         addnewitem ad = new addnewitem();
         ad.show();
         dispose();
         ad.username(users);
         ad.userid(id);
-        
-        
+
+
     }//GEN-LAST:event_additemActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -723,13 +724,11 @@ public class staffinventory extends javax.swing.JFrame {
                     status.setText("");
                 } else {
                     JOptionPane.showMessageDialog(this, "Cancelled!");
-//                    codef.setText("");
-//                    pnf.setText("");
-//                    cf.setText("");
-//                    pf.setText("");
-//                    aqf.setText("");
-//                    mqf.setText("");
-//                    availf.setText("");
+                    codefield.setText("");
+                    itemf.setText("");
+                    descripf.setText("");
+                    aquantf.setText("");
+                    status.setText("");
 
                 }
 
@@ -745,7 +744,28 @@ public class staffinventory extends javax.swing.JFrame {
     private void searchbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchbActionPerformed
         // TODO add your handling code here:
         String text = search.getText();
-        ps= con.prepareStatement("SELECT * FROM `items` WHERE `item`");
+        con = connection.connectDB();
+        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
+        while (tblModel.getRowCount() > 0) {
+            tblModel.removeRow(0);
+            try {
+                ps = con.prepareStatement("SELECT * FROM `items` WHERE `item` = '" + text + "'");
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    String code = rs.getString("code");
+                    String item = rs.getString("item");
+                    String description = rs.getString("description");
+                    String quantity = rs.getString("quantity");
+                    String status = rs.getString("status");
+
+                    String tbData[] = {code, item, description, quantity, status};
+                    tblModel.addRow(tbData);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(staffinventory.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }//GEN-LAST:event_searchbActionPerformed
 
     /**
