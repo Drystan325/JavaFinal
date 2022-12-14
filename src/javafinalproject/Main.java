@@ -263,7 +263,7 @@ public class Main extends javax.swing.JFrame {
         if(a==0)
         {
             setVisible(false);
-            new javafinal_LOGIN().setVisible(true);
+            new LOGIN().setVisible(true);
         }
     }//GEN-LAST:event_jproducts2ActionPerformed
 

@@ -5,16 +5,15 @@
 package javafinalproject;
 
 import java.sql.*;
-import com.sun.jdi.connect.spi.Connection;
-import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 
 public class LOGIN extends javax.swing.JFrame {
 
-     Connection con;
+    Connection con;
     Statement stmt;
     ResultSet rs;
-    
+    PreparedStatement ps;
+
     public LOGIN() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -33,18 +32,17 @@ public class LOGIN extends javax.swing.JFrame {
         tfUsername = new javax.swing.JTextField();
         tfPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(tfUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 192, -1));
-        jPanel1.add(tfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 192, -1));
+
+        tfUsername.setBackground(new java.awt.Color(102, 0, 255));
+
+        tfPassword.setBackground(new java.awt.Color(255, 0, 102));
 
         btnLogin.setText("LOGIN");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -52,27 +50,58 @@ public class LOGIN extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, -1, -1));
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
-        jLabel2.setText("Username");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
-        jLabel3.setText("Password");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 100, 210));
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
         jLabel1.setText("LOGIN");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 91, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/javafinalproject/supply.jpg"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-70, -50, 650, -1));
+        jLabel5.setText("Username");
+
+        jLabel6.setText("Password");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLogin)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(238, 238, 238))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(270, 270, 270)
+                        .addComponent(btnLogin))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel1)))
+                .addGap(135, 135, 135))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,51 +118,49 @@ public class LOGIN extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-  try {
+        con = connection.connectDB();
+        try {
             String email = tfUsername.getText();
             String password = tfPassword.getText();
-            String role = "";
-            String status = "";
 
-            Statement stmt = connection.connectDB().createStatement();
-            String sql = "select * from user where username='" + email + "' and password='" + password + "'";
-            ResultSet rs = stmt.executeQuery(sql);
+            ps = con.prepareStatement("SELECT * FROM `user` WHERE username =? and password =?");
+            ps.setString(1, email);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            if (rs.next()) {
 
-            while (rs.next()) {
-                email = rs.getString(4);
-                password = rs.getString(5);
-                role = rs.getString(6);
-                status = rs.getString(7);
+                if (rs.getString(6).equals("admin") && rs.getString(7).equals("active")) {
 
-                if (email.equals(email) && password.equals(password) && role.equals("admin") && status.equals("active")) {
+                    JOptionPane.showMessageDialog(this, "SUCCESSFULLY LOGIN!");
+                    Main m = new Main();
+                    m.show();
+                    dispose();
 
+                } else if (rs.getString(6).equals("staff") && rs.getString(7).equals("active")) {
                     JOptionPane.showMessageDialog(this, "SUCCESSFULLY LOGIN!");
                     staffinventory d = new staffinventory();
                     dispose();
                     d.show();
-                } else if (email.equals(email) && password.equals(password) && role.equals("staff") && status.equals("active")) {
-                    JOptionPane.showMessageDialog(this, "SUCCESSFULLY LOGIN!");
-                    staffinventory d = new staffinventory();
-                    dispose();
-                    d.show();
-                } else if (email.equals(email) && password.equals(password) && role.equals("admin") && status.equals("inactive")) {
+                    d.username(email);
+                } else if (rs.getString(7).equals("inactive")) {
 
                     JOptionPane.showMessageDialog(this, "Account inactive!");
-                } else if (email.equals(email) && password.equals(password) && role.equals("staff") && status.equals("inactive")) {
+                } else if (rs.getString(7).equals("pending")) {
 
-                    JOptionPane.showMessageDialog(this, "Account inactive!");
+                    JOptionPane.showMessageDialog(this, "Account is Pending! Please Contact your admin");
                 } else {
-                    JOptionPane.showMessageDialog(this, "username or either password is inputed wrong");
-
+                    JOptionPane.showMessageDialog(this, "Something went wrong!");
                     tfUsername.setText("");
                     tfPassword.setText("");
                 }
 
+            }else{
+                   JOptionPane.showMessageDialog(this, "username or either password is inputed wrong");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-            // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -174,11 +201,9 @@ public class LOGIN extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField tfPassword;
     private javax.swing.JTextField tfUsername;
     // End of variables declaration//GEN-END:variables

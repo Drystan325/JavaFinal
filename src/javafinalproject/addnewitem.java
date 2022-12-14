@@ -1,14 +1,18 @@
 
 package javafinalproject;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 
-public class addnewitem extends javax.swing.JFrame {
+public final class addnewitem extends javax.swing.JFrame {
 
    
     Connection con;
@@ -18,6 +22,38 @@ public class addnewitem extends javax.swing.JFrame {
 
     public addnewitem() {
         initComponents();
+        date();
+        time();
+    }
+    
+      public void username(String user) {
+
+        username.setText(user);
+    }
+
+    public void userid(String userid) {
+
+        useid.setText(userid);
+    }
+
+    public void date() {
+
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String day = sdf.format(d);
+        dat.setText(day);
+
+    }
+
+    public void time() {
+        new javax.swing.Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date d = new Date();
+                SimpleDateFormat f = new SimpleDateFormat("hh:mm:ss a");
+                timer.setText(f.format(d));
+            }
+        }).start();
     }
 
     @SuppressWarnings("unchecked")
@@ -25,10 +61,10 @@ public class addnewitem extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        userid = new javax.swing.JLabel();
-        user = new javax.swing.JLabel();
-        date = new javax.swing.JLabel();
-        time = new javax.swing.JLabel();
+        useid = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
+        dat = new javax.swing.JLabel();
+        timer = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         codef = new javax.swing.JTextField();
         itemf = new javax.swing.JTextField();
@@ -38,16 +74,20 @@ public class addnewitem extends javax.swing.JFrame {
         additem = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
         newi = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        userid.setText("userid");
+        useid.setText("userid");
 
-        user.setText("user");
+        username.setText("user");
 
-        date.setText("date");
+        dat.setText("date");
 
-        time.setText("time");
+        timer.setText("time");
 
         jLabel5.setText("code");
 
@@ -69,22 +109,20 @@ public class addnewitem extends javax.swing.JFrame {
             }
         });
 
-        newi.setText("new");
+        newi.setText("new product");
+
+        jLabel1.setText("userid");
+
+        jLabel2.setText("username");
+
+        jLabel3.setText("date");
+
+        jLabel4.setText("time");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(userid, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 305, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,7 +130,25 @@ public class addnewitem extends javax.swing.JFrame {
                     .addComponent(additem, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(215, 215, 215))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(useid, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(233, 233, 233)
+                        .addComponent(newi, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -103,28 +159,33 @@ public class addnewitem extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(desf, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(itemf, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(codef, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(233, 233, 233)
-                        .addComponent(newi, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(codef, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(timer, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dat, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(userid))
+                        .addGap(86, 86, 86)
+                        .addComponent(newi))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(date)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(user)
-                    .addComponent(time))
-                .addGap(31, 31, 31)
-                .addComponent(newi)
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(useid, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(dat))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(username)
+                            .addComponent(jLabel2)
+                            .addComponent(timer)
+                            .addComponent(jLabel4))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -160,11 +221,15 @@ public class addnewitem extends javax.swing.JFrame {
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
         // TODO add your handling code here
+        String user = username.getText();
+        String id = useid.getText();
         int x = JOptionPane.showConfirmDialog(this, "Are You Sure You Want Cancel?", "WARNING!", JOptionPane.WARNING_MESSAGE);
         if (x == 0) {
             staffinventory si = new staffinventory();
             si.show();
             dispose();
+             si.username(user);
+            
 
         } else {
         }
@@ -181,8 +246,8 @@ public class addnewitem extends javax.swing.JFrame {
             String item = itemf.getText();
             String quantity = "0";
             String status = "Unavailable";
-            ps = con.prepareStatement("SELECT * FROM `items` WHERE `item`=?");
-            ps.setString(1, item);
+            ps = con.prepareStatement("SELECT * FROM `items` WHERE `code`=?");
+            ps.setString(1, code);
             rs = ps.executeQuery();
             if (rs.next() == true) {
                 JOptionPane.showMessageDialog(rootPane, "This Item Already  Exist!!");
@@ -209,12 +274,11 @@ public class addnewitem extends javax.swing.JFrame {
                         try {
 //                            
 
-                                String users = user.getText();
-                                String userids = userid.getText();
+                                String users = username.getText();
                                 String transaction = "Added New Product";
 //                              
-                                String dates = date.getText();
-                                String times = time.getText();
+                                String dates = dat.getText();
+                                String times = timer.getText();
 
                                 ps = con.prepareStatement("INSERT INTO `transactions`(user,transaction,date,time,code,item,quantity) VALUES (?,?,?,?,?,?,?)");
                                 
@@ -296,16 +360,20 @@ public class addnewitem extends javax.swing.JFrame {
     private javax.swing.JButton additem;
     private javax.swing.JButton cancel;
     private javax.swing.JTextField codef;
-    private javax.swing.JLabel date;
+    private javax.swing.JLabel dat;
     private javax.swing.JTextField desf;
     private javax.swing.JTextField itemf;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel newi;
-    private javax.swing.JLabel time;
-    private javax.swing.JLabel user;
-    private javax.swing.JLabel userid;
+    private javax.swing.JLabel timer;
+    private javax.swing.JLabel useid;
+    private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }
