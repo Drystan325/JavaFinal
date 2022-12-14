@@ -11,7 +11,7 @@ public class LOGIN extends javax.swing.JFrame {
 
     Connection con;
     Statement stmt;
-    ResultSet rs;
+    ResultSet rs; 
     PreparedStatement ps;
 
     public LOGIN() {
