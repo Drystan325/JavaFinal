@@ -105,6 +105,39 @@ public class staffinventory extends javax.swing.JFrame {
         }
     }
 
+    private void code() {
+        con = connection.connectDB();
+
+        try {
+            String text = Search.getText();
+            ps = con.prepareStatement("SELECT * FROM `items` WHERE `code`=?");
+            ps.setString(1, text);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
+                while (tblModel.getRowCount() > 0) {
+                    tblModel.removeRow(0);
+                }
+                String code = rs.getString("code");
+                String item = rs.getString("item");
+                String description = rs.getString("description");
+                String quantity = rs.getString("quantity");
+                String status = rs.getString("status");
+
+                String tbData[] = {code, item, description, quantity, status};
+                tblModel.addRow(tbData);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Code Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "error");
+
+        }
+    }
+
     private void table() {
         con = connection.connectDB();
         DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
@@ -156,7 +189,7 @@ public class staffinventory extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         lowstock = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        logout = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -175,17 +208,24 @@ public class staffinventory extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        search = new javax.swing.JTextField();
-        searchb = new javax.swing.JButton();
+        Search = new javax.swing.JTextField();
+        codeb = new javax.swing.JButton();
+        cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(0, 204, 204));
+
+        timer.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         timer.setText("time");
 
+        dat.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         dat.setText("date");
 
+        username.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         username.setText("user");
 
+        additem.setBackground(new java.awt.Color(102, 255, 102));
         additem.setText("Add New Item");
         additem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,6 +233,7 @@ public class staffinventory extends javax.swing.JFrame {
             }
         });
 
+        updateitem.setBackground(new java.awt.Color(51, 102, 255));
         updateitem.setText("Update Item");
         updateitem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,6 +241,7 @@ public class staffinventory extends javax.swing.JFrame {
             }
         });
 
+        removeitem.setBackground(new java.awt.Color(255, 102, 153));
         removeitem.setText("Remove Item");
         removeitem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,6 +249,7 @@ public class staffinventory extends javax.swing.JFrame {
             }
         });
 
+        stockin.setBackground(new java.awt.Color(255, 204, 0));
         stockin.setText("Stock In");
         stockin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,12 +257,15 @@ public class staffinventory extends javax.swing.JFrame {
             }
         });
 
+        stockout.setBackground(new java.awt.Color(204, 51, 0));
         stockout.setText("Stock Out");
         stockout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stockoutActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBackground(new java.awt.Color(153, 255, 255));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -247,6 +293,7 @@ public class staffinventory extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(table);
 
+        lowstock.setBackground(new java.awt.Color(255, 102, 51));
         lowstock.setText("Low Stock Item");
         lowstock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,20 +301,46 @@ public class staffinventory extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setText("Log Out");
+        logout.setBackground(new java.awt.Color(255, 51, 51));
+        logout.setText("Log Out");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jLabel4.setText("Item:");
 
-        jLabel6.setText("code:");
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel6.setText("Code:");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jLabel7.setText("Description:");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jLabel8.setText("Available Quantity:");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jLabel10.setText("Manage Quantity:");
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jLabel11.setText("Status:");
 
+        codefield.setEditable(false);
+
+        itemf.setEditable(false);
+        itemf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemfActionPerformed(evt);
+            }
+        });
+
+        descripf.setEditable(false);
+
+        aquantf.setEditable(false);
+
+        all.setBackground(new java.awt.Color(153, 255, 255));
         all.setText("All Items");
         all.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,20 +348,35 @@ public class staffinventory extends javax.swing.JFrame {
             }
         });
 
+        userid.setBackground(new java.awt.Color(102, 255, 255));
+        userid.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         userid.setText("id");
 
-        jLabel1.setText("userid");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel1.setText("User Id:");
 
-        jLabel2.setText("date");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel2.setText("Date:");
 
-        jLabel3.setText("username");
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel3.setText("Username:");
 
-        jLabel5.setText("time");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jLabel5.setText("Time:");
 
-        searchb.setText("Search");
-        searchb.addActionListener(new java.awt.event.ActionListener() {
+        codeb.setBackground(new java.awt.Color(255, 204, 102));
+        codeb.setText("Search Code");
+        codeb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchbActionPerformed(evt);
+                codebActionPerformed(evt);
+            }
+        });
+
+        cancel.setBackground(new java.awt.Color(255, 102, 102));
+        cancel.setText("Cancel");
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
             }
         });
 
@@ -315,40 +403,47 @@ public class staffinventory extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(timer, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(codefield)
-                            .addComponent(itemf, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                            .addComponent(descripf, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                            .addComponent(aquantf, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                            .addComponent(mquantf, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                            .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(additem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateitem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(removeitem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lowstock, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(stockin, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(stockout, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addComponent(all, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(searchb, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(codeb, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(updateitem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(itemf)
+                                    .addComponent(descripf)
+                                    .addComponent(aquantf)
+                                    .addComponent(mquantf)
+                                    .addComponent(status)
+                                    .addComponent(codefield, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(21, 21, 21)
+                                        .addComponent(additem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(removeitem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lowstock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(stockin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(stockout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -367,8 +462,8 @@ public class staffinventory extends javax.swing.JFrame {
                 .addGap(72, 72, 72)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(all)
-                    .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchb))
+                    .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(codeb))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
@@ -402,7 +497,9 @@ public class staffinventory extends javax.swing.JFrame {
                     .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(stockout))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(logout)
+                    .addComponent(cancel))
                 .addGap(15, 15, 15))
         );
 
@@ -424,60 +521,80 @@ public class staffinventory extends javax.swing.JFrame {
 
     private void updateitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateitemActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel t = (DefaultTableModel) table.getModel();
-        int selectIndex = table.getSelectedRow();
-        String id2 = (String) t.getValueAt(selectIndex, 0);
 
         String item = itemf.getText();
         String description = descripf.getText();
         String available = aquantf.getText();
-        String manage = mquantf.getText();
         String stat = status.getText();
 
-        if (manage.equals("")) {
-            try {
-                String sql = "UPDATE `items` SET item=? ,description=? ,quantity=? ,status=? WHERE code=?";
-                ps = con.prepareStatement(sql);
-
-                ps.setString(1, item);
-                ps.setString(2, description);
-                ps.setString(3, available);
-                ps.setString(4, stat);
-                ps.setString(5, id2);
-
-                ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Update Successful! ");
-                String users = username.getText();
-                String transaction = "updated the Item " + item + "";
-                String code = codefield.getText();
-                String dates = dat.getText();
-                String times = timer.getText();
-
-                ps = con.prepareStatement("INSERT INTO `transactions`(user,transaction,date,time,code,item,quantity) VALUES (?,?,?,?,?,?,?)");
-
-                ps.setString(1, users);
-                ps.setString(2, transaction);
-                ps.setString(3, dates);
-                ps.setString(4, times);
-                ps.setString(5, code);
-                ps.setString(6, item);
-                ps.setString(7, available);
-
-                ps.executeUpdate();
-                codefield.setText("");
-                itemf.setText("");
-                descripf.setText("");
-                aquantf.setText("");
-                status.setText("");
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "ERROR!", "ERROR", JOptionPane.ERROR_MESSAGE);
-            }
-            table();
+        if (item.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please Please Select An Item You Want To Update");
         } else {
-            JOptionPane.showMessageDialog(this, "To Update Quantity, Choose Wether To Stock In Or Stock Out Quantity!", "ERROR", JOptionPane.ERROR_MESSAGE);
-//            mqf.setText("");
+            DefaultTableModel t = (DefaultTableModel) table.getModel();
+            int selectIndex = table.getSelectedRow();
+            String id2 = (String) t.getValueAt(selectIndex, 0);
+            con = connection.connectDB();
+            try {
+                ps = con.prepareStatement("SELECT * FROM `items` WHERE `item`=?");
+                ps.setString(1, item);
+                rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    String newstat = rs.getString(6);
+                    if (newstat.equals(stat)) {
+                        JOptionPane.showMessageDialog(null, "No Update Made!");
+                    } else {
+                        try {
+                            String sql = "UPDATE `items` SET item=? ,description=? ,quantity=? ,status=? WHERE code=?";
+                            ps = con.prepareStatement(sql);
+
+                            ps.setString(1, item);
+                            ps.setString(2, description);
+                            ps.setString(3, available);
+                            ps.setString(4, stat);
+                            ps.setString(5, id2);
+
+                            ps.executeUpdate();
+                            JOptionPane.showMessageDialog(null, "Update Successful! ");
+                            String users = username.getText();
+                            String transaction = "updated the Item " + item + "";
+                            String code = codefield.getText();
+                            String dates = dat.getText();
+                            String times = timer.getText();
+
+                            ps = con.prepareStatement("INSERT INTO `transactions`(user,transaction,date,time,code,item,quantity) VALUES (?,?,?,?,?,?,?)");
+
+                            ps.setString(1, users);
+                            ps.setString(2, transaction);
+                            ps.setString(3, dates);
+                            ps.setString(4, times);
+                            ps.setString(5, code);
+                            ps.setString(6, item);
+                            ps.setString(7, available);
+
+                            ps.executeUpdate();
+                            codefield.setText("");
+                            itemf.setText("");
+                            descripf.setText("");
+                            aquantf.setText("");
+                            status.setText("");
+
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(this, "ERROR!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                        table();
+
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "To Update Quantity, Choose Wether To Stock In Or Stock Out Quantity!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "ERROR!", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+            }
+
         }
+
 
     }//GEN-LAST:event_updateitemActionPerformed
 
@@ -528,21 +645,17 @@ public class staffinventory extends javax.swing.JFrame {
 
                 }
                 table();
-//                codef.setText("");
-//                pnf.setText("");
-//                cf.setText("");
-//                pf.setText("");
-//                spf.setText("");
-//                aqf.setText("");
-//                availf.setText("");
+                codefield.setText("");
+                itemf.setText("");
+                descripf.setText("");
+                aquantf.setText("");
+                status.setText("");
+
             } else {
 
             }
         }
-        try {
 
-        } catch (Exception e) {
-        }
 
     }//GEN-LAST:event_removeitemActionPerformed
 
@@ -608,10 +721,13 @@ public class staffinventory extends javax.swing.JFrame {
         // TODO add your handling code here:
         con = connection.connectDB();
         String c = mquantf.getText();
+        String d = codefield.getText();
 
-        if (c.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please Input Quantity You Want To Add Or Deduct In Your Current Stock! ");
-        } else {
+        if (d.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please Please Select An Item You Want To Stock In");
+        } else if (c.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please Input Quantity You Want To Add In Your Current Stock! ");
+        }else {
             try {
                 Integer a = Integer.parseInt(aquantf.getText());
                 Integer b = Integer.parseInt(mquantf.getText());
@@ -654,13 +770,11 @@ public class staffinventory extends javax.swing.JFrame {
                     status.setText("");
                 } else {
                     JOptionPane.showMessageDialog(this, "Cancelled!");
-//                    codef.setText("");
-//                    pnf.setText("");
-//                    cf.setText("");
-//                    pf.setText("");
-//                    aqf.setText("");
-//                    mqf.setText("");
-//                    availf.setText("");
+                    codefield.setText("");
+                    itemf.setText("");
+                    descripf.setText("");
+                    aquantf.setText("");
+                    status.setText("");
 
                 }
 
@@ -669,6 +783,12 @@ public class staffinventory extends javax.swing.JFrame {
             }
 
             table();
+            codefield.setText("");
+            itemf.setText("");
+            descripf.setText("");
+            aquantf.setText("");
+            status.setText("");
+
         }
 
     }//GEN-LAST:event_stockinActionPerformed
@@ -677,9 +797,12 @@ public class staffinventory extends javax.swing.JFrame {
         // TODO add your handling code here:
         con = connection.connectDB();
         String c = mquantf.getText();
+        String d = codefield.getText();
 
-        if (c.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please Input Quantity You Want To Add Or Deduct In Your Current Stock! ");
+        if (d.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please Please Select An Item You Want To Stock Out");
+        } else if (c.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please Input Quantity You Want To Deduct In Your Current Stock! ");
         } else {
             try {
                 Integer a = Integer.parseInt(aquantf.getText());
@@ -737,36 +860,66 @@ public class staffinventory extends javax.swing.JFrame {
             }
 
             table();
+            codefield.setText("");
+            itemf.setText("");
+            descripf.setText("");
+            aquantf.setText("");
+            status.setText("");
+
         }
 
     }//GEN-LAST:event_stockoutActionPerformed
 
-    private void searchbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchbActionPerformed
+    private void codebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codebActionPerformed
         // TODO add your handling code here:
-        String text = search.getText();
-        con = connection.connectDB();
-        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
-        while (tblModel.getRowCount() > 0) {
-            tblModel.removeRow(0);
-            try {
-                ps = con.prepareStatement("SELECT * FROM `items` WHERE `item` = '" + text + "'");
-                rs = ps.executeQuery();
-                if (rs.next()) {
-                    String code = rs.getString("code");
-                    String item = rs.getString("item");
-                    String description = rs.getString("description");
-                    String quantity = rs.getString("quantity");
-                    String status = rs.getString("status");
+        String s = Search.getText();
+        if (s.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please Input Code!", "WARNING!", JOptionPane.ERROR_MESSAGE);
 
-                    String tbData[] = {code, item, description, quantity, status};
-                    tblModel.addRow(tbData);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(staffinventory.class.getName()).log(Level.SEVERE, null, ex);
+        }else{
+            code();
+        }
+        
+    }//GEN-LAST:event_codebActionPerformed
+
+    private void itemfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemfActionPerformed
+
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        // TODO add your handling code here:
+        int x = JOptionPane.showConfirmDialog(this, "Are You Sure You Want To Leave This Page?", "WARNING!", JOptionPane.WARNING_MESSAGE);
+        if (x == 0) {
+            LOGIN li = new LOGIN();
+            li.show();
+            dispose();
+        } else {
+
+        }
+    }//GEN-LAST:event_logoutActionPerformed
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+        // TODO add your handling code here:
+        String check = codefield.getText();
+
+        if (check.equals("")) {
+
+        } else {
+            int x = JOptionPane.showConfirmDialog(this, "Are You Sure You Want To Cancel?", "WARNING!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Cancelled!", "WARNING!", JOptionPane.WARNING_MESSAGE);
+            if (x == 0) {
+                codefield.setText("");
+                itemf.setText("");
+                descripf.setText("");
+                aquantf.setText("");
+                status.setText("");
+            } else {
+
             }
         }
 
-    }//GEN-LAST:event_searchbActionPerformed
+
+    }//GEN-LAST:event_cancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -807,14 +960,16 @@ public class staffinventory extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Search;
     private javax.swing.JButton additem;
     private javax.swing.JButton all;
     private javax.swing.JTextField aquantf;
+    private javax.swing.JButton cancel;
+    private javax.swing.JButton codeb;
     private javax.swing.JTextField codefield;
     private javax.swing.JLabel dat;
     private javax.swing.JTextField descripf;
     private javax.swing.JTextField itemf;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -827,11 +982,10 @@ public class staffinventory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton logout;
     private javax.swing.JButton lowstock;
     private javax.swing.JTextField mquantf;
     private javax.swing.JButton removeitem;
-    private javax.swing.JTextField search;
-    private javax.swing.JButton searchb;
     private javax.swing.JTextField status;
     private javax.swing.JButton stockin;
     private javax.swing.JButton stockout;
