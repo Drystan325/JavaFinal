@@ -311,7 +311,6 @@ public final class addnewitem extends javax.swing.JFrame {
                                 codef.setText("");
                                 desf.setText("");
                                 itemf.setText("");
-                                newi.setText("New Product");
 
                             
 

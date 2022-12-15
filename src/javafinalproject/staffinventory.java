@@ -14,12 +14,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class staffinventory extends javax.swing.JFrame {
+public final class staffinventory extends javax.swing.JFrame {
 
     Connection con;
     PreparedStatement ps;
@@ -49,7 +48,7 @@ public class staffinventory extends javax.swing.JFrame {
                 userid.setText(u);
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
 
         }
 
@@ -65,13 +64,10 @@ public class staffinventory extends javax.swing.JFrame {
     }
 
     public void time() {
-        new javax.swing.Timer(0, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Date d = new Date();
-                SimpleDateFormat f = new SimpleDateFormat("hh:mm:ss a");
-                timer.setText(f.format(d));
-            }
+        new javax.swing.Timer(0, (ActionEvent e) -> {
+            Date d = new Date();
+            SimpleDateFormat f = new SimpleDateFormat("hh:mm:ss a");
+            timer.setText(f.format(d));
         }).start();
     }
 
@@ -101,7 +97,7 @@ public class staffinventory extends javax.swing.JFrame {
 
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
     }
 
@@ -132,7 +128,7 @@ public class staffinventory extends javax.swing.JFrame {
 
             }
 
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "error");
 
         }
@@ -165,7 +161,7 @@ public class staffinventory extends javax.swing.JFrame {
                             String tbData[] = {code, item, descript, quantity, status};
                             tblModel.addRow(tbData);
 
-                        } catch (Exception e) {
+                        } catch (SQLException e) {
                             JOptionPane.showMessageDialog(null, "Item Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
                             table();
                         }
@@ -175,11 +171,11 @@ public class staffinventory extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Item Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
                     table();
                 }
-            } catch (Exception e) {
+            } catch (HeadlessException | SQLException e) {
 
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
     }
 
@@ -208,7 +204,7 @@ public class staffinventory extends javax.swing.JFrame {
 
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
 
     }
@@ -645,8 +641,9 @@ public class staffinventory extends javax.swing.JFrame {
                             descripf.setText("");
                             aquantf.setText("");
                             status.setText("");
+                            mquantf.setText("");
 
-                        } catch (Exception e) {
+                        } catch (HeadlessException | SQLException e) {
                             JOptionPane.showMessageDialog(this, "ERROR!", "ERROR", JOptionPane.ERROR_MESSAGE);
                         }
                         table();
@@ -707,6 +704,7 @@ public class staffinventory extends javax.swing.JFrame {
                     descripf.setText("");
                     aquantf.setText("");
                     status.setText("");
+                    mquantf.setText("");
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(this, "ERROR!", "ERROR", JOptionPane.ERROR_MESSAGE);
 
@@ -717,6 +715,7 @@ public class staffinventory extends javax.swing.JFrame {
                 descripf.setText("");
                 aquantf.setText("");
                 status.setText("");
+                mquantf.setText("");
 
             } else {
 
@@ -835,6 +834,7 @@ public class staffinventory extends javax.swing.JFrame {
                     descripf.setText("");
                     aquantf.setText("");
                     status.setText("");
+                    mquantf.setText("");
                 } else {
                     JOptionPane.showMessageDialog(this, "Cancelled!");
                     codefield.setText("");
@@ -842,6 +842,7 @@ public class staffinventory extends javax.swing.JFrame {
                     descripf.setText("");
                     aquantf.setText("");
                     status.setText("");
+                    mquantf.setText("");
 
                 }
 
@@ -855,6 +856,7 @@ public class staffinventory extends javax.swing.JFrame {
             descripf.setText("");
             aquantf.setText("");
             status.setText("");
+            mquantf.setText("");
 
         }
 
@@ -912,6 +914,7 @@ public class staffinventory extends javax.swing.JFrame {
                     descripf.setText("");
                     aquantf.setText("");
                     status.setText("");
+                    mquantf.setText("");
                 } else {
                     JOptionPane.showMessageDialog(this, "Cancelled!");
                     codefield.setText("");
@@ -919,6 +922,7 @@ public class staffinventory extends javax.swing.JFrame {
                     descripf.setText("");
                     aquantf.setText("");
                     status.setText("");
+                    mquantf.setText("");
 
                 }
 
@@ -932,6 +936,7 @@ public class staffinventory extends javax.swing.JFrame {
             descripf.setText("");
             aquantf.setText("");
             status.setText("");
+            mquantf.setText("");
 
         }
 
@@ -980,6 +985,7 @@ public class staffinventory extends javax.swing.JFrame {
                 descripf.setText("");
                 aquantf.setText("");
                 status.setText("");
+                mquantf.setText("");
             } else {
 
             }
@@ -1036,10 +1042,8 @@ public class staffinventory extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new staffinventory().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new staffinventory().setVisible(true);
         });
     }
 
