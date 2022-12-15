@@ -70,11 +70,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="all" min="-2" pref="127" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="ifield" min="-2" pref="159" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="itemb" min="-2" pref="103" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="Search" min="-2" pref="137" max="-2" attributes="0"/>
+                              <Component id="Search" min="-2" pref="198" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="codeb" min="-2" pref="119" max="-2" attributes="0"/>
                           </Group>
@@ -146,8 +142,6 @@
                       <Component id="all" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Search" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="codeb" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="itemb" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ifield" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="230" max="-2" attributes="0"/>
@@ -488,6 +482,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="Search">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SearchActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="codeb">
           <Properties>
@@ -509,22 +506,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="itemb">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="66" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Search Item"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itembActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="ifield">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ifieldActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

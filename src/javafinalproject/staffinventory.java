@@ -138,51 +138,6 @@ public class staffinventory extends javax.swing.JFrame {
         }
     }
 
-    private void filteritem() {
-
-        con = connection.connectDB();
-        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
-        while (tblModel.getRowCount() > 0) {
-            tblModel.removeRow(0);
-        }
-
-        try {
-
-            String sql;
-            sql = "SELECT `code`, `item`, `description`, `quantity`, `status` FROM `items` WHERE  `item`='" + ifield.getText() + "'";
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
-            try {
-                if (rs.next()) {
-                    while (rs.next()) {
-                        try {
-                            String code = rs.getString("code");
-                            String item = rs.getString("item");
-                            String descript = rs.getString("description");
-                            String quantity = rs.getString("quantity");
-                            String status = rs.getString("status");
-
-                            String tbData[] = {code, item, descript, quantity, status};
-                            tblModel.addRow(tbData);
-
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Item Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
-                            table();
-                        }
-
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Item Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
-                    table();
-                }
-            } catch (Exception e) {
-
-            }
-
-        } catch (Exception e) {
-        }
-    }
-
     private void table() {
         con = connection.connectDB();
         DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
@@ -256,8 +211,6 @@ public class staffinventory extends javax.swing.JFrame {
         Search = new javax.swing.JTextField();
         codeb = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
-        itemb = new javax.swing.JButton();
-        ifield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -411,6 +364,12 @@ public class staffinventory extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jLabel5.setText("Time:");
 
+        Search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchActionPerformed(evt);
+            }
+        });
+
         codeb.setBackground(new java.awt.Color(255, 204, 102));
         codeb.setText("Search Code");
         codeb.addActionListener(new java.awt.event.ActionListener() {
@@ -424,20 +383,6 @@ public class staffinventory extends javax.swing.JFrame {
         cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelActionPerformed(evt);
-            }
-        });
-
-        itemb.setBackground(new java.awt.Color(255, 255, 102));
-        itemb.setText("Search Item");
-        itemb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itembActionPerformed(evt);
-            }
-        });
-
-        ifield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ifieldActionPerformed(evt);
             }
         });
 
@@ -468,11 +413,7 @@ public class staffinventory extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addComponent(all, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ifield, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(itemb, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(35, 35, 35)
-                            .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(codeb, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -528,9 +469,7 @@ public class staffinventory extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(all)
                     .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codeb)
-                    .addComponent(itemb)
-                    .addComponent(ifield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(codeb))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
@@ -794,7 +733,7 @@ public class staffinventory extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please Please Select An Item You Want To Stock In");
         } else if (c.equals("")) {
             JOptionPane.showMessageDialog(this, "Please Input Quantity You Want To Add In Your Current Stock! ");
-        } else {
+        }else {
             try {
                 Integer a = Integer.parseInt(aquantf.getText());
                 Integer b = Integer.parseInt(mquantf.getText());
@@ -943,10 +882,10 @@ public class staffinventory extends javax.swing.JFrame {
         if (s.equals("")) {
             JOptionPane.showMessageDialog(this, "Please Input Code!", "WARNING!", JOptionPane.ERROR_MESSAGE);
 
-        } else {
+        }else{
             code();
         }
-
+        
     }//GEN-LAST:event_codebActionPerformed
 
     private void itemfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemfActionPerformed
@@ -988,22 +927,9 @@ public class staffinventory extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cancelActionPerformed
 
-    private void ifieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ifieldActionPerformed
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ifieldActionPerformed
-
-    private void itembActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itembActionPerformed
-        // TODO add your handling code here:
-        String s = ifield.getText();
-        if (s.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please Input The Item Name", "WARNING!", JOptionPane.ERROR_MESSAGE);
-
-        } else {
-            filteritem();
-        }
-
-
-    }//GEN-LAST:event_itembActionPerformed
+    }//GEN-LAST:event_SearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1053,8 +979,6 @@ public class staffinventory extends javax.swing.JFrame {
     private javax.swing.JTextField codefield;
     private javax.swing.JLabel dat;
     private javax.swing.JTextField descripf;
-    private javax.swing.JTextField ifield;
-    private javax.swing.JButton itemb;
     private javax.swing.JTextField itemf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
