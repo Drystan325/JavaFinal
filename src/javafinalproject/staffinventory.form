@@ -28,10 +28,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -69,8 +66,12 @@
                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="all" min="-2" pref="127" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="Search" min="-2" pref="198" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="ifield" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="itemb" min="-2" pref="99" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="Search" min="-2" pref="166" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="codeb" min="-2" pref="119" max="-2" attributes="0"/>
                           </Group>
@@ -80,46 +81,43 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="updateitem" min="-2" pref="127" max="-2" attributes="0"/>
+                              <Component id="stockout" min="-2" pref="127" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel11" min="-2" pref="110" max="-2" attributes="0"/>
                                       <Component id="jLabel10" min="-2" pref="110" max="-2" attributes="0"/>
                                       <Component id="jLabel8" min="-2" pref="110" max="-2" attributes="0"/>
-                                      <Component id="jLabel7" min="-2" pref="110" max="-2" attributes="0"/>
-                                      <Component id="jLabel6" min="-2" pref="110" max="-2" attributes="0"/>
-                                      <Component id="jLabel4" min="-2" pref="110" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" alignment="1" min="-2" pref="110" max="-2" attributes="0"/>
+                                      <Component id="jLabel4" alignment="1" min="-2" pref="110" max="-2" attributes="0"/>
+                                      <Component id="jLabel6" alignment="1" min="-2" pref="110" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="itemf" max="32767" attributes="0"/>
-                                      <Component id="descripf" max="32767" attributes="0"/>
-                                      <Component id="aquantf" max="32767" attributes="0"/>
-                                      <Component id="mquantf" max="32767" attributes="0"/>
-                                      <Component id="status" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="codefield" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                          <Component id="additem" min="-2" pref="127" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="removeitem" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
-                                              <Component id="lowstock" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
-                                              <Component id="stockin" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
-                                              <Component id="stockout" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
-                                              <Component id="cancel" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
+                                  <EmptySpace min="-2" pref="372" max="-2" attributes="0"/>
+                                  <Component id="stockin" min="-2" pref="127" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="cancel" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace pref="15" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="status" pref="302" max="32767" attributes="0"/>
+                      <Component id="itemf" max="32767" attributes="0"/>
+                      <Component id="codefield" max="32767" attributes="0"/>
+                      <Component id="descripf" alignment="0" max="32767" attributes="0"/>
+                      <Component id="aquantf" alignment="0" max="32767" attributes="0"/>
+                      <Component id="mquantf" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="removeitem" min="-2" pref="127" max="-2" attributes="0"/>
+                      <Component id="updateitem" min="-2" pref="127" max="-2" attributes="0"/>
+                      <Component id="additem" min="-2" pref="127" max="-2" attributes="0"/>
+                      <Component id="lowstock" min="-2" pref="127" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -142,10 +140,12 @@
                       <Component id="all" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Search" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="codeb" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="itemb" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ifield" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="230" max="-2" attributes="0"/>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="codefield" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -153,39 +153,44 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel4" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="itemf" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="updateitem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="itemf" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel4" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel7" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="descripf" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="removeitem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="descripf" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel7" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel8" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="aquantf" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lowstock" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="aquantf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lowstock" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jLabel8" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel10" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="mquantf" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="stockin" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel10" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="mquantf" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="stockin" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel11" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="status" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="stockout" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel11" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="status" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="stockout" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="logout" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cancel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="cancel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="44" max="32767" attributes="0"/>
+                  <Component id="logout" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -484,6 +489,7 @@
         <Component class="javax.swing.JTextField" name="Search">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SearchActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="SearchKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="codeb">
@@ -506,6 +512,23 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="itemb">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Search Item"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itembActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="ifield">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ifieldKeyPressed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ifieldKeyTyped"/>
           </Events>
         </Component>
       </SubComponents>

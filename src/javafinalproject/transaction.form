@@ -310,6 +310,7 @@
                           <Component id="VDate" max="32767" attributes="0"/>
                           <Component id="txtfield" alignment="0" max="32767" attributes="0"/>
                           <Component id="usrf" alignment="0" max="32767" attributes="0"/>
+                          <Component id="all" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="88" max="32767" attributes="0"/>
                   </Group>
@@ -318,7 +319,9 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                      <Component id="all" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="VDate" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="txtfield" min="-2" max="-2" attributes="0"/>
@@ -381,6 +384,18 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="all">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="16" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="All Transactions"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

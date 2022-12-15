@@ -1,4 +1,3 @@
-
 package javafinalproject;
 
 import java.sql.Connection;
@@ -7,91 +6,57 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+public final class users extends javax.swing.JFrame {
 
-public class users extends javax.swing.JFrame {
-
-   
     public users() {
         initComponents();
-       setLocationRelativeTo(null);  
-        Connect();
+        setLocationRelativeTo(null);
         load();
     }
-    
+
     Connection con;
     PreparedStatement pst;
     DefaultTableModel df;
-    
-    
+    ResultSet rs;
 
-   public void Connect()
-    {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javafinal", "root","");
-            
-            
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
+    public void load() {
+        con = connection.connectDB();
+        DefaultTableModel tblModel = (DefaultTableModel) logTable.getModel();
+        while (tblModel.getRowCount() > 0) {
+            tblModel.removeRow(0);
         }
-   
-    }
-   
-    public void load()
-    {
-        int a;
         try {
-            pst = con.prepareStatement("select * from user");
-            ResultSet rs = pst.executeQuery();
-            
-            
-            ResultSetMetaData rd = rs.getMetaData();
-            a = rd.getColumnCount();
-            df = (DefaultTableModel)logTable.getModel();
-            df.setRowCount(0);
-            
-            while(rs.next())
-            {
-                Vector v2 = new Vector();
-                for(int i=1; i<=a; i++)
-                {
-                    v2.add(rs.getString("user_id"));
-                    v2.add(rs.getString("first_name"));
-                    v2.add(rs.getString("last_name"));
-                    v2.add(rs.getString("username"));
-                    v2.add(rs.getString("password"));
-                    v2.add(rs.getString("position"));
-                    v2.add(rs.getString("status"));
-                    
-                }
-                df.addRow(v2);
+            Statement st = con.createStatement();
+            String sql;
+            sql = "SELECT * FROM user";
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+
+                String userid = rs.getString("user_id");
+                String firstname = rs.getString("first_name");
+                String lastname = rs.getString("last_name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String position = rs.getString("position");
+                String status = rs.getString("status");
+                String tbData[] = {userid, firstname, lastname, username, password, position, status};
+                tblModel.addRow(tbData);
+
             }
-            
-            
-            
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (SQLException e) {
         }
-        
-        
-        
-        
-        
+
     }
-   
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -114,7 +79,7 @@ public class users extends javax.swing.JFrame {
         jadd = new javax.swing.JButton();
         jupdate = new javax.swing.JButton();
         jdelete = new javax.swing.JButton();
-        jcancel = new javax.swing.JButton();
+        cancelb = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -279,13 +244,12 @@ public class users extends javax.swing.JFrame {
             }
         });
 
-        jcancel.setBackground(new java.awt.Color(204, 204, 204));
-        jcancel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jcancel.setForeground(new java.awt.Color(51, 51, 51));
-        jcancel.setText("CANCEL");
-        jcancel.addActionListener(new java.awt.event.ActionListener() {
+        cancelb.setBackground(new java.awt.Color(204, 204, 204));
+        cancelb.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        cancelb.setText("CANCEL");
+        cancelb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcancelActionPerformed(evt);
+                cancelbActionPerformed(evt);
             }
         });
 
@@ -293,13 +257,13 @@ public class users extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jcancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jadd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jupdate, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                    .addComponent(jdelete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jadd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jupdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                    .addComponent(jdelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cancelb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -311,8 +275,8 @@ public class users extends javax.swing.JFrame {
                 .addComponent(jupdate)
                 .addGap(36, 36, 36)
                 .addComponent(jdelete)
-                .addGap(32, 32, 32)
-                .addComponent(jcancel)
+                .addGap(26, 26, 26)
+                .addComponent(cancelb, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -421,34 +385,31 @@ public class users extends javax.swing.JFrame {
 
     private void jdeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jdeleteActionPerformed
         // TODO add your handling code here:
-        
-         df =  (DefaultTableModel)logTable.getModel();
-         int selected = logTable.getSelectedRow();
-       
-         int id = Integer.parseInt(df.getValueAt(selected, 0).toString());
-        
-        
-          
-            
+
+        df = (DefaultTableModel) logTable.getModel();
+        int selected = logTable.getSelectedRow();
+
+        int id = Integer.parseInt(df.getValueAt(selected, 0).toString());
+
         try {
             // TODO add your handling code here:
 
             pst = con.prepareStatement("delete from user where user_id = ?");
-           
+
             pst.setInt(1, id);
-            
+
             pst.executeUpdate();
             JOptionPane.showMessageDialog(this, "User Deleted");
-            
-             txtfname.setText("");
-             txtlname.setText("");
-             txtuname.setText("");
-             txtpassword.setText("");
-             txtposition.setText("");
-             txtstatus.setText("");
-             txtfname.requestFocus();
-             load();
-              jdelete.setEnabled(true);
+
+            txtfname.setText("");
+            txtlname.setText("");
+            txtuname.setText("");
+            txtpassword.setText("");
+            txtposition.setText("");
+            txtstatus.setText("");
+            txtfname.requestFocus();
+            load();
+            jdelete.setEnabled(true);
         } catch (SQLException ex) {
             Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -470,90 +431,76 @@ public class users extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtstatusActionPerformed
 
-    private void jcancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcancelActionPerformed
-        // TODO add your handling code here:
-        Main m = new Main();
-        m.setVisible(true);
-        
-        dispose();
-    }//GEN-LAST:event_jcancelActionPerformed
-
     private void jaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jaddActionPerformed
-        
-         try {
-            
-            String fname = txtfname.getText();
-            String lname = txtlname.getText();
-            String uname = txtuname.getText();
-            String psw = txtpassword.getText();
-            String pos = txtposition.getText();
-            String st = txtstatus.getText();
-            
-            if(fname.equals("")|| lname.equals("") || uname.equals("")||psw.equals("")|| pos.equals("")|| st.equals("")){
-                JOptionPane.showMessageDialog(this, "Please input all fields");
-            }else{
-            
-            // TODO add your handling code here:
 
-            pst = con.prepareStatement("insert into user(first_name,last_name,username,password,position,status)values(?,?,?,?,?,?)");
-            pst.setString(1, fname);
-            pst.setString(2, lname);
-            pst.setString(3, uname);
-            pst.setString(4, psw);
-            pst.setString(5, pos);
-            pst.setString(6, st);
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, "User Added");
-            
-             txtfname.setText("");
-             txtlname.setText("");
-             txtuname.setText("");
-             txtpassword.setText("");
-             txtposition.setText("");
-             txtstatus.setText("");
-             txtfname.requestFocus();
-             load();
+        con = connection.connectDB();
+        String fname = txtfname.getText();
+        String lname = txtlname.getText();
+        String uname = txtuname.getText();
+        String psw = txtpassword.getText();
+        String pos = txtposition.getText();
+        String st = txtstatus.getText();
+        try {
+            pst = con.prepareStatement("SELECT * FROM `user` WHERE `username`='" + fname + "'");
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "Username Already Exist");
+            } else {
+                pst = con.prepareStatement("insert into user(first_name,last_name,username,password,position,status)values(?,?,?,?,?,?)");
+                pst.setString(1, fname);
+                pst.setString(2, lname);
+                pst.setString(3, uname);
+                pst.setString(4, psw);
+                pst.setString(5, pos);
+                pst.setString(6, st);
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(this, "User Added");
+
+                txtfname.setText("");
+                txtlname.setText("");
+                txtuname.setText("");
+                txtpassword.setText("");
+                txtposition.setText("");
+                txtstatus.setText("");
+                txtfname.requestFocus();
+                load();
+
             }
-            
+            // TODO add your handling code here:
+            if (fname.equals("") || lname.equals("") || uname.equals("") || psw.equals("") || pos.equals("") || st.equals("")) {
+                JOptionPane.showMessageDialog(this, "Please input all fields");
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-    
 
 
-    
     }//GEN-LAST:event_jaddActionPerformed
 
     private void jaddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jaddMouseClicked
         // TODO add your handling code here:
-        
-        
-        
-   
+
+
     }//GEN-LAST:event_jaddMouseClicked
 
     private void jupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jupdateActionPerformed
-        df =  (DefaultTableModel)logTable.getModel();
-         int selected = logTable.getSelectedRow();
-       
-         int id = Integer.parseInt(df.getValueAt(selected, 0).toString());
-          
-            String fname = txtfname.getText();
-            String lname = txtlname.getText();
-            String uname = txtuname.getText();
-            String psw = txtpassword.getText();
-            String pos = txtposition.getText();
-            String st = txtstatus.getText();
-            
+        df = (DefaultTableModel) logTable.getModel();
+        int selected = logTable.getSelectedRow();
+
+        int id = Integer.parseInt(df.getValueAt(selected, 0).toString());
+
+        String fname = txtfname.getText();
+        String lname = txtlname.getText();
+        String uname = txtuname.getText();
+        String psw = txtpassword.getText();
+        String pos = txtposition.getText();
+        String st = txtstatus.getText();
 
         try {
-              
-            
 
             pst = con.prepareStatement("update user set first_name = ?, last_name =?, username =?, password=?, position=?, status=?  where user_id =?");
-            
+
             pst.setString(1, fname);
             pst.setString(2, lname);
             pst.setString(3, uname);
@@ -563,7 +510,7 @@ public class users extends javax.swing.JFrame {
             pst.setInt(7, id);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(this, "User Updated");
-            
+
             txtfname.setText("");
             txtlname.setText("");
             txtuname.setText("");
@@ -572,30 +519,28 @@ public class users extends javax.swing.JFrame {
             txtstatus.setText("");
             txtfname.requestFocus();
             load();
-           
-            
-             
+
             jupdate.setEnabled(true);
         } catch (SQLException ex) {
             Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
         }
-                      
-            
+
+
     }//GEN-LAST:event_jupdateActionPerformed
 
     private void logTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logTableMouseClicked
         // TODO add your handling code here:
-        df =  (DefaultTableModel)logTable.getModel();
-       int selected = logTable.getSelectedRow();
-       
-         int id = Integer.parseInt(df.getValueAt(selected, 0).toString());
-         txtfname.setText(df.getValueAt(selected, 1).toString());
-         txtlname.setText(df.getValueAt(selected,2).toString());
-         txtuname.setText(df.getValueAt(selected, 3).toString());
-         txtpassword.setText(df.getValueAt(selected, 4).toString());
-         txtposition.setText(df.getValueAt(selected, 5).toString());
-         txtstatus.setText(df.getValueAt(selected, 6).toString());
-         
+        df = (DefaultTableModel) logTable.getModel();
+        int selected = logTable.getSelectedRow();
+
+        int id = Integer.parseInt(df.getValueAt(selected, 0).toString());
+        txtfname.setText(df.getValueAt(selected, 1).toString());
+        txtlname.setText(df.getValueAt(selected, 2).toString());
+        txtuname.setText(df.getValueAt(selected, 3).toString());
+        txtpassword.setText(df.getValueAt(selected, 4).toString());
+        txtposition.setText(df.getValueAt(selected, 5).toString());
+        txtstatus.setText(df.getValueAt(selected, 6).toString());
+
 
     }//GEN-LAST:event_logTableMouseClicked
 
@@ -603,9 +548,13 @@ public class users extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jupdateMouseClicked
 
-    
-    
-   
+    private void cancelbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelbActionPerformed
+        // TODO add your handling code here:
+        Dashboard m = new Dashboard();
+        m.show();
+        dispose();
+    }//GEN-LAST:event_cancelbActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -639,6 +588,7 @@ public class users extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelb;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -653,7 +603,6 @@ public class users extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jadd;
-    private javax.swing.JButton jcancel;
     private javax.swing.JButton jdelete;
     private javax.swing.JButton jupdate;
     private javax.swing.JTable logTable;

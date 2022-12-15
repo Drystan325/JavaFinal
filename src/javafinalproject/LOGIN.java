@@ -10,8 +10,7 @@ import javax.swing.JOptionPane;
 public class LOGIN extends javax.swing.JFrame {
 
     Connection con;
-    Statement stmt;
-    ResultSet rs; 
+    ResultSet rs;
     PreparedStatement ps;
 
     public LOGIN() {
@@ -243,13 +242,13 @@ public class LOGIN extends javax.swing.JFrame {
 
                 if (rs.getString(6).equals("admin") && rs.getString(7).equals("active")) {
 
-                    JOptionPane.showMessageDialog(this, "SUCCESSFULLY LOGIN!");
-                    Main m = new Main();
+                    JOptionPane.showMessageDialog(this, "SUCCESSFULLY LOGIN AS ADMIN!");
+                    Dashboard m = new Dashboard();
                     m.show();
                     dispose();
 
                 } else if (rs.getString(6).equals("staff") && rs.getString(7).equals("active")) {
-                    JOptionPane.showMessageDialog(this, "SUCCESSFULLY LOGIN!");
+                    JOptionPane.showMessageDialog(this, "SUCCESSFULLY LOGIN AS STAFF!");
                     staffinventory d = new staffinventory();
                     dispose();
                     d.show();
@@ -266,8 +265,11 @@ public class LOGIN extends javax.swing.JFrame {
                     tfPassword.setText("");
                 }
 
-            }else{
-                   JOptionPane.showMessageDialog(this, "username or either password is inputed wrong");
+            } else if (email.equals("") || password.equals("")) {
+                JOptionPane.showMessageDialog(this, "Empty Fields! Please Input Your Credentials to Log In!");
+
+            } else {
+                    JOptionPane.showMessageDialog(null, "Invalid Credentials", "Log In Error!", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -278,7 +280,7 @@ public class LOGIN extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
         new SIGNUP().setVisible(true);
-            this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**

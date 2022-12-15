@@ -4,6 +4,7 @@ package javafinalproject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 
@@ -53,6 +54,35 @@ public class stocks extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
+     private void lowstock() {
+        con = connection.connectDB();
+        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
+        while (tblModel.getRowCount() > 0) {
+            tblModel.removeRow(0);
+        }
+
+        try {
+            Statement st = con.createStatement();
+            String sql;
+            sql = "SELECT * FROM `items` WHERE `quantity`<11";
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+
+                String code = rs.getString("code");
+                String item = rs.getString("item");
+                String description = rs.getString("description");
+                String quantity = rs.getString("quantity");
+                String status = rs.getString("status");
+
+                String tbData[] = {code, item, description, quantity, status};
+                tblModel.addRow(tbData);
+
+            }
+
+        } catch (SQLException e) {
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,6 +102,8 @@ public class stocks extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        low = new javax.swing.JButton();
+        all = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,6 +211,26 @@ public class stocks extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        low.setBackground(new java.awt.Color(0, 0, 0));
+        low.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        low.setForeground(new java.awt.Color(255, 255, 255));
+        low.setText("Low Stock Items");
+        low.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lowActionPerformed(evt);
+            }
+        });
+
+        all.setBackground(new java.awt.Color(0, 0, 0));
+        all.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        all.setForeground(new java.awt.Color(255, 255, 255));
+        all.setText("All Items");
+        all.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -190,7 +242,12 @@ public class stocks extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(back, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(all, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(low, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(back))
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(76, Short.MAX_VALUE))
@@ -203,7 +260,10 @@ public class stocks extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(back)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(back)
+                    .addComponent(low)
+                    .addComponent(all))
                 .addContainerGap(112, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -225,11 +285,21 @@ public class stocks extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
-        Main m = new Main();
+        Dashboard m = new Dashboard();
         m.setVisible(true);
 
         dispose();
     }//GEN-LAST:event_backActionPerformed
+
+    private void lowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowActionPerformed
+        // TODO add your handling code here:
+        lowstock();
+    }//GEN-LAST:event_lowActionPerformed
+
+    private void allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allActionPerformed
+        // TODO add your handling code here:
+        table();
+    }//GEN-LAST:event_allActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,6 +337,7 @@ public class stocks extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton all;
     private javax.swing.JButton back;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -275,6 +346,7 @@ public class stocks extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton low;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 

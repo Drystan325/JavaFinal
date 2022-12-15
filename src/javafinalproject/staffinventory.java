@@ -6,7 +6,6 @@ package javafinalproject;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -49,6 +50,7 @@ public final class staffinventory extends javax.swing.JFrame {
             }
 
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
 
         }
 
@@ -98,6 +100,8 @@ public final class staffinventory extends javax.swing.JFrame {
             }
 
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
+
         }
     }
 
@@ -124,17 +128,16 @@ public final class staffinventory extends javax.swing.JFrame {
                 tblModel.addRow(tbData);
 
             } else {
-                JOptionPane.showMessageDialog(null, "Code Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Code Not Found", "No Data Found!", JOptionPane.ERROR_MESSAGE);
 
             }
 
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "error");
+            JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
 
         }
     }
 
-<<<<<<< HEAD
     private void filteritem() {
 
         con = connection.connectDB();
@@ -149,39 +152,31 @@ public final class staffinventory extends javax.swing.JFrame {
             sql = "SELECT `code`, `item`, `description`, `quantity`, `status` FROM `items` WHERE  `item`='" + ifield.getText() + "'";
             st = con.createStatement();
             rs = st.executeQuery(sql);
-            try {
-                if (rs.next()) {
-                    while (rs.next()) {
-                        try {
-                            String code = rs.getString("code");
-                            String item = rs.getString("item");
-                            String descript = rs.getString("description");
-                            String quantity = rs.getString("quantity");
-                            String status = rs.getString("status");
 
-                            String tbData[] = {code, item, descript, quantity, status};
-                            tblModel.addRow(tbData);
+            while (rs.next()) {
+                try {
+                    String code = rs.getString("code");
+                    String item = rs.getString("item");
+                    String descript = rs.getString("description");
+                    String quantity = rs.getString("quantity");
+                    String status = rs.getString("status");
 
-                        } catch (SQLException e) {
-                            JOptionPane.showMessageDialog(null, "Item Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
-                            table();
-                        }
+                    String tbData[] = {code, item, descript, quantity, status};
+                    tblModel.addRow(tbData);
 
-                    }
-                } else {
+                } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, "Item Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
                     table();
                 }
-            } catch (HeadlessException | SQLException e) {
 
             }
 
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
+
         }
     }
 
-=======
->>>>>>> 578eebeb3c44a32dd0d5f1a0efe1f3de152c66df
     private void table() {
         con = connection.connectDB();
         DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
@@ -208,6 +203,8 @@ public final class staffinventory extends javax.swing.JFrame {
             }
 
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
+
         }
 
     }
@@ -255,6 +252,8 @@ public final class staffinventory extends javax.swing.JFrame {
         Search = new javax.swing.JTextField();
         codeb = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
+        itemb = new javax.swing.JButton();
+        ifield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -413,6 +412,11 @@ public final class staffinventory extends javax.swing.JFrame {
                 SearchActionPerformed(evt);
             }
         });
+        Search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                SearchKeyTyped(evt);
+            }
+        });
 
         codeb.setBackground(new java.awt.Color(255, 204, 102));
         codeb.setText("Search Code");
@@ -427,6 +431,23 @@ public final class staffinventory extends javax.swing.JFrame {
         cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelActionPerformed(evt);
+            }
+        });
+
+        itemb.setBackground(new java.awt.Color(255, 255, 102));
+        itemb.setText("Search Item");
+        itemb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itembActionPerformed(evt);
+            }
+        });
+
+        ifield.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                ifieldKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ifieldKeyTyped(evt);
             }
         });
 
@@ -456,8 +477,12 @@ public final class staffinventory extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addComponent(all, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(ifield)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(itemb, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(27, 27, 27)
+                            .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(codeb, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -465,36 +490,35 @@ public final class staffinventory extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(updateitem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(stockout, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(itemf)
-                                    .addComponent(descripf)
-                                    .addComponent(aquantf)
-                                    .addComponent(mquantf)
-                                    .addComponent(status)
-                                    .addComponent(codefield, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(21, 21, 21)
-                                        .addComponent(additem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(removeitem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lowstock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(stockin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(stockout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(372, 372, 372)
+                                .addComponent(stockin, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(149, 149, 149)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(status, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                    .addComponent(itemf)
+                    .addComponent(codefield)
+                    .addComponent(descripf)
+                    .addComponent(aquantf)
+                    .addComponent(mquantf))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(removeitem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateitem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(additem, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lowstock, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,43 +537,48 @@ public final class staffinventory extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(all)
                     .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codeb))
+                    .addComponent(codeb)
+                    .addComponent(itemb)
+                    .addComponent(ifield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(codefield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(additem))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateitem)
                     .addComponent(itemf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updateitem))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeitem)
                     .addComponent(descripf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(removeitem))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(aquantf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lowstock))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(aquantf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lowstock))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mquantf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mquantf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(stockin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(stockout))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(logout)
-                    .addComponent(cancel))
+                .addComponent(cancel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(logout)
                 .addGap(15, 15, 15))
         );
 
@@ -561,9 +590,7 @@ public final class staffinventory extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -578,7 +605,7 @@ public final class staffinventory extends javax.swing.JFrame {
         String stat = status.getText();
 
         if (item.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please Please Select An Item You Want To Update");
+            JOptionPane.showMessageDialog(this, "Please Select An Item In The Table That You Want To Update");
         } else {
             DefaultTableModel t = (DefaultTableModel) table.getModel();
             int selectIndex = table.getSelectedRow();
@@ -640,7 +667,7 @@ public final class staffinventory extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "To Update Quantity, Choose Wether To Stock In Or Stock Out Quantity!", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "ERROR!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
 
             }
 
@@ -655,7 +682,7 @@ public final class staffinventory extends javax.swing.JFrame {
         int row = table.getSelectedRow();
         String i = itemf.getText();
         if (i.equals("")) {
-            JOptionPane.showConfirmDialog(this, "Please Select Product In The Table You Want that You Want To Remove!", "WARNING!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showConfirmDialog(this, "Please Select An Item In The Table That You Want To Remove!", "WARNING!", JOptionPane.WARNING_MESSAGE);
         } else {
             int x = JOptionPane.showConfirmDialog(this, "Are You Sure You Want To Remove This Product?", "WARNING!", JOptionPane.WARNING_MESSAGE);
 
@@ -693,7 +720,7 @@ public final class staffinventory extends javax.swing.JFrame {
                     status.setText("");
                     mquantf.setText("");
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(this, "ERROR!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
 
                 }
                 table();
@@ -756,6 +783,8 @@ public final class staffinventory extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "You Don't Have Any Stock Available In This Product! Please Add Your Stock Now!", "Warning", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_tableMouseClicked
 
@@ -777,10 +806,10 @@ public final class staffinventory extends javax.swing.JFrame {
         String d = codefield.getText();
 
         if (d.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please Please Select An Item You Want To Stock In");
+            JOptionPane.showMessageDialog(this, "Please Select An Item In %The Table That You Want To Add Quantity");
         } else if (c.equals("")) {
             JOptionPane.showMessageDialog(this, "Please Input Quantity You Want To Add In Your Current Stock! ");
-        }else {
+        } else {
             try {
                 Integer a = Integer.parseInt(aquantf.getText());
                 Integer b = Integer.parseInt(mquantf.getText());
@@ -834,7 +863,7 @@ public final class staffinventory extends javax.swing.JFrame {
                 }
 
             } catch (HeadlessException | SQLException e) {
-                JOptionPane.showMessageDialog(this, "ERROR", "WARNING!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
             }
 
             table();
@@ -914,7 +943,7 @@ public final class staffinventory extends javax.swing.JFrame {
                 }
 
             } catch (HeadlessException | SQLException e) {
-                JOptionPane.showMessageDialog(this, "ERROR", "WARNING!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
             }
 
             table();
@@ -935,10 +964,10 @@ public final class staffinventory extends javax.swing.JFrame {
         if (s.equals("")) {
             JOptionPane.showMessageDialog(this, "Please Input Code!", "WARNING!", JOptionPane.ERROR_MESSAGE);
 
-        }else{
+        } else {
             code();
         }
-        
+
     }//GEN-LAST:event_codebActionPerformed
 
     private void itemfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemfActionPerformed
@@ -984,6 +1013,41 @@ public final class staffinventory extends javax.swing.JFrame {
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SearchActionPerformed
+
+    private void itembActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itembActionPerformed
+        // TODO add your handling code here:
+        String s = ifield.getText();
+        try {
+            String sql;
+            sql = "SELECT `code`, `item`, `description`, `quantity`, `status` FROM `items` WHERE  `item`='" + ifield.getText() + "'";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                filteritem();
+            } else if (s.equals("")) {
+                JOptionPane.showMessageDialog(this, "Please Input Item Name!", "WARNING!", JOptionPane.ERROR_MESSAGE);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Item Not Found", "No Data Found!", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(staffinventory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_itembActionPerformed
+
+    private void ifieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ifieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ifieldKeyPressed
+
+    private void ifieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ifieldKeyTyped
+        // TODO add your handling code here:
+        Search.setText("");
+    }//GEN-LAST:event_ifieldKeyTyped
+
+    private void SearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchKeyTyped
+        // TODO add your handling code here:
+        ifield.setText("");
+    }//GEN-LAST:event_SearchKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1031,6 +1095,8 @@ public final class staffinventory extends javax.swing.JFrame {
     private javax.swing.JTextField codefield;
     private javax.swing.JLabel dat;
     private javax.swing.JTextField descripf;
+    private javax.swing.JTextField ifield;
+    private javax.swing.JButton itemb;
     private javax.swing.JTextField itemf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

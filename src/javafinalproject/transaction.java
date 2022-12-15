@@ -55,11 +55,13 @@ public class transaction extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
+
         }
 
     }
 
-    private void transaction() {
+    private void transactions() {
 
         con = connection.connectDB();
         DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
@@ -74,42 +76,31 @@ public class transaction extends javax.swing.JFrame {
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
-            try {
-                if (rs.next()) {
-                    while (rs.next()) {
-                        
-                            String Transaction_id = rs.getString("id");
-                            String Username = rs.getString("user");
-                            String Transaction = rs.getString("transaction");
-                            String Date = rs.getString("date");
-                            String Time = rs.getString("time");
-                            String Code = rs.getString("code");
-                            String Item = rs.getString("item");
-                            String Quantity = rs.getString("quantity");
+            while (rs.next()) {
 
-                            String tbData[] = {Transaction_id, Username, Transaction, Date, Time, Code, Item, Quantity};
-                            tblModel.addRow(tbData);
+                String Transaction_id = rs.getString("id");
+                String Username = rs.getString("user");
+                String Transaction = rs.getString("transaction");
+                String Date = rs.getString("date");
+                String Time = rs.getString("time");
+                String Code = rs.getString("code");
+                String Item = rs.getString("item");
+                String Quantity = rs.getString("quantity");
 
-
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Date Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
-                    table();
-                }
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Date Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
+                String tbData[] = {Transaction_id, Username, Transaction, Date, Time, Code, Item, Quantity};
+                tblModel.addRow(tbData);
 
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Date Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
+
+            JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
 
         }
 
     }
 
-     private void getuser() {
+    private void getuser() {
 
         con = connection.connectDB();
         DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
@@ -120,45 +111,32 @@ public class transaction extends javax.swing.JFrame {
         try {
 
             String sql;
-            sql = "SELECT `id`, `user`, `transaction`, `date`, `time`, `code`, `item`, `quantity` FROM `transactions` WHERE `user` ='" + txtfield.getText() + "'";
+            sql = "SELECT `id`, `user`, `transaction`, `date`, `time`, `code`, `item`, `quantity` FROM `transactions` WHERE `user` ='" + usrf.getText() + "'";
             st = con.createStatement();
             rs = st.executeQuery(sql);
 
-            try {
-                if (rs.next()) {
-                    while (rs.next()) {
-                        
-                            String Transaction_id = rs.getString("id");
-                            String Username = rs.getString("user");
-                            String Transaction = rs.getString("transaction");
-                            String Date = rs.getString("date");
-                            String Time = rs.getString("time");
-                            String Code = rs.getString("code");
-                            String Item = rs.getString("item");
-                            String Quantity = rs.getString("quantity");
+            while (rs.next()) {
 
-                            String tbData[] = {Transaction_id, Username, Transaction, Date, Time, Code, Item, Quantity};
-                            tblModel.addRow(tbData);
+                String Transaction_id = rs.getString("id");
+                String Username = rs.getString("user");
+                String Transaction = rs.getString("transaction");
+                String Date = rs.getString("date");
+                String Time = rs.getString("time");
+                String Code = rs.getString("code");
+                String Item = rs.getString("item");
+                String Quantity = rs.getString("quantity");
 
-
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "User Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
-                    table();
-                }
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "User Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
+                String tbData[] = {Transaction_id, Username, Transaction, Date, Time, Code, Item, Quantity};
+                tblModel.addRow(tbData);
 
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "User Not Found", "Warning", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Something Went Wrong", "Error!", JOptionPane.ERROR_MESSAGE);
 
         }
 
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -181,6 +159,7 @@ public class transaction extends javax.swing.JFrame {
         VUser = new javax.swing.JButton();
         txtfield = new javax.swing.JTextField();
         usrf = new javax.swing.JTextField();
+        all = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -353,6 +332,15 @@ public class transaction extends javax.swing.JFrame {
         usrf.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         usrf.setForeground(new java.awt.Color(255, 255, 255));
 
+        all.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        all.setText("All Transactions");
+        all.setToolTipText("");
+        all.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -363,13 +351,16 @@ public class transaction extends javax.swing.JFrame {
                     .addComponent(VUser)
                     .addComponent(VDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtfield)
-                    .addComponent(usrf))
+                    .addComponent(usrf)
+                    .addComponent(all, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(99, 99, 99)
+                .addGap(53, 53, 53)
+                .addComponent(all)
+                .addGap(18, 18, 18)
                 .addComponent(VDate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -699,7 +690,7 @@ public class transaction extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Main m = new Main();
+        Dashboard m = new Dashboard();
         m.setVisible(true);
 
         dispose();
@@ -707,29 +698,56 @@ public class transaction extends javax.swing.JFrame {
 
     private void VUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VUserActionPerformed
         // TODO add your handling code here:
-        String s = usrf.getText();
-        if (s.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please Input User!", "WARNING!", JOptionPane.ERROR_MESSAGE);
+        String d = usrf.getText();
+        try {
+            String sql;
+            sql = "SELECT `id`, `user`, `transaction`, `date`, `time`, `code`, `item`, `quantity` FROM `transactions` WHERE `user` ='" + usrf.getText() + "'";
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            if (rs.next()) {
+                getuser();
+            } else if (d.equals("")) {
+                JOptionPane.showMessageDialog(null, "Please Input Username", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Username Not Found", "No Data Found", JOptionPane.ERROR_MESSAGE);
 
-        } else {
-            getuser();
+            }
+        } catch (Exception e) {
+
         }
     }//GEN-LAST:event_VUserActionPerformed
 
     private void VDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VDateActionPerformed
         // TODO add your handling code here:
-        String s = VDate.getText();
-        if (s.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please Input Date!", "WARNING!", JOptionPane.ERROR_MESSAGE);
+        String s = txtfield.getText();
+        try {
+            String sql;
+            sql = "SELECT `id`, `user`, `transaction`, `date`, `time`, `code`, `item`, `quantity` FROM `transactions` WHERE `date` ='" + txtfield.getText() + "'";
+            st = con.createStatement();
+            rs = st.executeQuery(sql);
+            if (rs.next()) {
+                transactions();
+            } else if (s.equals("")) {
+                JOptionPane.showMessageDialog(null, "Please Input Date", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Date Not Found", "No Data Found", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
 
-        } else {
-            transaction();
         }
+
     }//GEN-LAST:event_VDateActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allActionPerformed
+        // TODO add your handling code here:
+        table();
+        usrf.setText("");
+        txtfield.setText("");
+    }//GEN-LAST:event_allActionPerformed
 
     /**
      * @param args the command line arguments
@@ -769,6 +787,7 @@ public class transaction extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton VDate;
     private javax.swing.JButton VUser;
+    private javax.swing.JButton all;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JEditorPane jEditorPane1;
