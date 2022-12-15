@@ -322,6 +322,7 @@ public class users extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(102, 0, 0));
         jLabel8.setText("User Information");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);

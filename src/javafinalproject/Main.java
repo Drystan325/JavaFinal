@@ -35,7 +35,7 @@ public class Main extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jusers = new javax.swing.JButton();
         jproducts = new javax.swing.JButton();
-        jproducts1 = new javax.swing.JButton();
+        bstock = new javax.swing.JButton();
         jproducts2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -72,12 +72,12 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jproducts1.setBackground(new java.awt.Color(204, 204, 204));
-        jproducts1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jproducts1.setText("Stock");
-        jproducts1.addActionListener(new java.awt.event.ActionListener() {
+        bstock.setBackground(new java.awt.Color(204, 204, 204));
+        bstock.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        bstock.setText("Stock");
+        bstock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jproducts1ActionPerformed(evt);
+                bstockActionPerformed(evt);
             }
         });
 
@@ -120,7 +120,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jproducts1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bstock, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(65, 65, 65))
         );
         jPanel2Layout.setVerticalGroup(
@@ -129,7 +129,7 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(49, 49, 49)
-                        .addComponent(jproducts1)
+                        .addComponent(bstock)
                         .addGap(71, 71, 71)
                         .addComponent(jproducts)
                         .addGap(80, 80, 80)
@@ -246,14 +246,14 @@ public class Main extends javax.swing.JFrame {
        
     }//GEN-LAST:event_jusersActionPerformed
 
-    private void jproducts1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jproducts1ActionPerformed
+    private void bstockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bstockActionPerformed
         // TODO add your handling code here:
-        staffinventory st = new staffinventory();
-        st.setVisible(true);
+        stocks s = new stocks();
+        s.setVisible(true);
         
         dispose();
         
-    }//GEN-LAST:event_jproducts1ActionPerformed
+    }//GEN-LAST:event_bstockActionPerformed
 
     private void jproducts2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jproducts2ActionPerformed
         // TODO add your handling code here:
@@ -311,6 +311,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bstock;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -322,7 +323,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton jproducts;
-    private javax.swing.JButton jproducts1;
     private javax.swing.JButton jproducts2;
     private javax.swing.JButton jusers;
     // End of variables declaration//GEN-END:variables
