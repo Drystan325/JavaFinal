@@ -806,7 +806,7 @@ public final class staffinventory extends javax.swing.JFrame {
         String d = codefield.getText();
 
         if (d.equals("")) {
-            JOptionPane.showMessageDialog(this, "Please Select An Item In %The Table That You Want To Add Quantity");
+            JOptionPane.showMessageDialog(this, "Please Select An Item In The Table That You Want To Add Quantity");
         } else if (c.equals("")) {
             JOptionPane.showMessageDialog(this, "Please Input Quantity You Want To Add In Your Current Stock! ");
         } else {

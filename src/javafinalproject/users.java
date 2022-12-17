@@ -57,6 +57,46 @@ public final class users extends javax.swing.JFrame {
 
     }
 
+    public void add() {
+        con = connection.connectDB();
+        String fname = txtfname.getText();
+        String lname = txtlname.getText();
+        String uname = txtuname.getText();
+        String psw = txtpassword.getText();
+        String pos = txtposition.getText();
+        String st = txtstatus.getText();
+        try {
+            pst = con.prepareStatement("SELECT * FROM `user` WHERE `username`='" + fname + "'");
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "Username Already Exist");
+            } else {
+                pst = con.prepareStatement("insert into user(first_name,last_name,username,password,position,status)values(?,?,?,?,?,?)");
+                pst.setString(1, fname);
+                pst.setString(2, lname);
+                pst.setString(3, uname);
+                pst.setString(4, psw);
+                pst.setString(5, pos);
+                pst.setString(6, st);
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(this, "User Added");
+
+                txtfname.setText("");
+                txtlname.setText("");
+                txtuname.setText("");
+                txtpassword.setText("");
+                txtposition.setText("");
+                txtstatus.setText("");
+                txtfname.requestFocus();
+                load();
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -432,49 +472,17 @@ public final class users extends javax.swing.JFrame {
     }//GEN-LAST:event_txtstatusActionPerformed
 
     private void jaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jaddActionPerformed
-
-        con = connection.connectDB();
         String fname = txtfname.getText();
         String lname = txtlname.getText();
         String uname = txtuname.getText();
         String psw = txtpassword.getText();
         String pos = txtposition.getText();
         String st = txtstatus.getText();
-        try {
-            pst = con.prepareStatement("SELECT * FROM `user` WHERE `username`='" + fname + "'");
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(this, "Username Already Exist");
-            } else {
-                pst = con.prepareStatement("insert into user(first_name,last_name,username,password,position,status)values(?,?,?,?,?,?)");
-                pst.setString(1, fname);
-                pst.setString(2, lname);
-                pst.setString(3, uname);
-                pst.setString(4, psw);
-                pst.setString(5, pos);
-                pst.setString(6, st);
-                pst.executeUpdate();
-                JOptionPane.showMessageDialog(this, "User Added");
-
-                txtfname.setText("");
-                txtlname.setText("");
-                txtuname.setText("");
-                txtpassword.setText("");
-                txtposition.setText("");
-                txtstatus.setText("");
-                txtfname.requestFocus();
-                load();
-
-            }
-            // TODO add your handling code here:
-            if (fname.equals("") || lname.equals("") || uname.equals("") || psw.equals("") || pos.equals("") || st.equals("")) {
-                JOptionPane.showMessageDialog(this, "Please input all fields");
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
+        if (fname.equals("") || lname.equals("") || uname.equals("") || psw.equals("") || pos.equals("") || st.equals("")) {
+            JOptionPane.showMessageDialog(this, "Please input all fields");
+        }else{
+            add();
         }
-
 
     }//GEN-LAST:event_jaddActionPerformed
 
